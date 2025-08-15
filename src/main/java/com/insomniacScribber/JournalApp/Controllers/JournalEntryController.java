@@ -36,6 +36,13 @@ public class JournalEntryController {
         return journalEntryRepository.save(journalEntry);
 
     }
+    @GetMapping("/getEntryById")
+    public JournalEntry getJournalEntryById(@RequestParam Long id) {
+        if(!journalEntryMap.containsKey(id)) {
+            throw new APIException("Entry with id " + id + " not found");
+        }
+        return journalEntryMap.get(id);
+    }
 
 
 
