@@ -2,6 +2,7 @@ package com.insomniacScribber.JournalApp.Controllers;
 
 
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
+import com.insomniacScribber.JournalApp.Exceptions.APIException;
 import com.insomniacScribber.JournalApp.Repository.JournalEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class JournalEntryController {
     @Autowired
     JournalEntryRepository journalEntryRepository;
 
+
     private Map<Long, JournalEntry> journalEntryMap = new HashMap<>();
 
 
@@ -25,9 +27,14 @@ public class JournalEntryController {
     }
 
 
-    @PostMapping("createEntry")
+    @PostMapping("/createEntry")
     public JournalEntry createJournalEntry(@RequestBody JournalEntry journalEntry) {
+        if(journalEntry.getTitle() == null || journalEntry.getTitle().isBlank()) {
+            throw new APIException("Title cannot be empty");
+        }
+
         return journalEntryRepository.save(journalEntry);
+
     }
 
 
