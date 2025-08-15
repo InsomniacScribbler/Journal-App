@@ -36,8 +36,8 @@ public class JournalEntryController {
         return journalEntryRepository.save(journalEntry);
 
     }
-    @GetMapping("/getEntryById")
-    public JournalEntry getJournalEntryById(@RequestParam Long id) {
+    @GetMapping("/getEntryById/{id}")
+    public JournalEntry getJournalEntryById(@PathVariable Long id) {
         if(!journalEntryMap.containsKey(id)) {
             throw new APIException("Entry with id " + id + " not found");
         }
@@ -50,6 +50,15 @@ public class JournalEntryController {
             throw new APIException("Entry with id " + id + " not found");
         }
         journalEntryRepository.deleteById(id);
+    }
+
+    @PutMapping("/updateEntryById/{id}")
+    public JournalEntry  updateJournalEntryById(@RequestBody JournalEntry journalEntry, @PathVariable Long id) {
+        if(!journalEntryMap.containsKey(id)) {
+            throw new APIException("Entry with id " + id + " not found");
+        }
+        journalEntry.setId(id);
+        return journalEntryRepository.save(journalEntry);
     }
 
 
