@@ -44,6 +44,14 @@ public class JournalEntryController {
         return journalEntryMap.get(id);
     }
 
+    @DeleteMapping("/deleteEntryById/{id}")
+    public void deleteJournalEntryById(@PathVariable Long id) {
+        if(!journalEntryMap.containsKey(id)) {
+            throw new APIException("Entry with id " + id + " not found");
+        }
+        journalEntryRepository.deleteById(id);
+    }
+
 
 
 }
