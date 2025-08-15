@@ -13,4 +13,9 @@ public class GlobalExceptionHandler {
         String message = ex.getMessage();
         return new ResponseEntity<>(message,  HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGenericException(Exception e) {
+        return new ResponseEntity<>("Internal Server Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
