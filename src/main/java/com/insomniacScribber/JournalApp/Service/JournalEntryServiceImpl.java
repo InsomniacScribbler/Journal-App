@@ -35,10 +35,6 @@ public class JournalEntryServiceImpl implements JournalEntryService {
             throw new APIException("Title cannot be empty");
         }
 
-        if (journalEntry.getContent() == null || journalEntry.getContent().isBlank()) {
-            throw new APIException("Content cannot be empty");
-        }
-
         try {
             return journalEntryRepository.save(journalEntry);
         } catch (Exception e) {
