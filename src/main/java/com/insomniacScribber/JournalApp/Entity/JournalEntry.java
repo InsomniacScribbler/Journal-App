@@ -1,21 +1,18 @@
 package com.insomniacScribber.JournalApp.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "journal_entries") // Specify the MongoDB collection
 public class JournalEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;      // Use String for MongoDB ObjectId
     private String title;
     private String content;
 }
