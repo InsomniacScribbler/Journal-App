@@ -40,4 +40,9 @@ public class JournalEntryController {
     public JournalEntry updateJournalEntryById(@RequestBody JournalEntry journalEntry, @PathVariable String id) {
         return journalEntryService.updateJournalEntryById(id, journalEntry);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<JournalEntry>> searchJournalEntries(@RequestParam String keyword) {
+        List<JournalEntry> entries = journalEntryService.findJournalEntriesByKeyword(keyword);
+        return ResponseEntity.ok(entries);
+    }
 }

@@ -114,4 +114,30 @@ public class JournalEntryServiceImpl implements JournalEntryService {
             throw new APIException("Failed to update journal entry: " + e.getMessage());
         }
     }
+    @Override
+    public List<JournalEntry> findJournalEntriesByKeyword(String keyword) {
+        // Input validation
+        if (keyword == null || keyword.isBlank()) {
+            throw new APIException("Search keyword cannot be null or empty");
+        }
+
+        try {
+            List<JournalEntry> entries = journalEntryRepository.findByTitleContaining(keyword);
+
+            // Optional: You can add additional logic here
+            if (entries.isEmpty()) {
+                // You can either return empty list or throw exception
+                // For search operations, empty list is usually preferred
+                return entries;
+            }
+
+            return entries;
+
+        } catch (APIException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APIException("Failed to search journal entries: " + e.getMessage());
+        }
+    }
 }
+
