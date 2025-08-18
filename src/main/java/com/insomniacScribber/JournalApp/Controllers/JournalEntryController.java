@@ -3,6 +3,7 @@ package com.insomniacScribber.JournalApp.Controllers;
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
 import com.insomniacScribber.JournalApp.Service.JournalEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +31,9 @@ public class JournalEntryController {
     }
 
     @DeleteMapping("/deleteEntryById/{id}")
-    public void deleteJournalEntryById(@PathVariable String id) {
-        journalEntryService.deleteJournalEntryById(id);
+    public ResponseEntity<String> deleteJournalEntryById(@PathVariable String id) {
+        String message = journalEntryService.deleteJournalEntryById(id);
+        return ResponseEntity.ok().body(message);
     }
 
     @PutMapping("/updateEntryById/{id}")
