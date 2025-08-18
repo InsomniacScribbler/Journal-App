@@ -1,6 +1,7 @@
 package com.insomniacScribber.JournalApp.Entity;
 
 import jakarta.persistence.PrePersist;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,9 @@ import java.time.LocalDateTime;
 public class JournalEntry {
     @Id
     private String id;      // Use String for MongoDB ObjectId
+    @NotBlank(message = "Title can't be Blank!")
     private String title;
+    @NotBlank(message = "There needs to be content in the journal Entry!")
     private String content;
     private LocalDateTime date;
 
