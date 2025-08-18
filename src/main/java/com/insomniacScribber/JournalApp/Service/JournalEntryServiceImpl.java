@@ -72,8 +72,9 @@ public class JournalEntryServiceImpl implements JournalEntryService {
             if (journalEntry.isEmpty()) {
                 throw new APIException("Entry with id " + id + " not found");
             }
+            String tobeDeleted = journalEntry.get().getTitle();
             journalEntryRepository.deleteById(id);
-            return "Journal entry " + journalEntryRepository.findById(id).toString() + " deleted";
+            return "Journal entry " + tobeDeleted + " deleted";
         } catch (APIException e) {
             throw e; // Re-throw our custom exception
         } catch (Exception e) {
