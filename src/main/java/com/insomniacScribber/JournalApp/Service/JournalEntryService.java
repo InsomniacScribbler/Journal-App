@@ -12,7 +12,7 @@ public interface JournalEntryService {
 
     JournalEntry getJournalEntryById(String id);  // Changed from Long to String
 
-    void deleteJournalEntryById(String id);       // Changed from Long to String
+    String deleteJournalEntryById(String id);       // Changed from Long to String
 
     JournalEntry updateJournalEntryById(String id, JournalEntry journalEntry);  // Changed from Long to String
 }

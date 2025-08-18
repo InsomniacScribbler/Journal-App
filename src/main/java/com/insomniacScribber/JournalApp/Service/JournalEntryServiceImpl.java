@@ -62,7 +62,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     }
 
     @Override
-    public void deleteJournalEntryById(String id) {
+    public String deleteJournalEntryById(String id) {
         if (id == null || id.isBlank()) {
             throw new APIException("Journal entry ID cannot be null or empty");
         }
@@ -73,6 +73,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
                 throw new APIException("Entry with id " + id + " not found");
             }
             journalEntryRepository.deleteById(id);
+            return "Journal entry " + journalEntryRepository.findById(id).toString() + " deleted";
         } catch (APIException e) {
             throw e; // Re-throw our custom exception
         } catch (Exception e) {
