@@ -43,8 +43,9 @@ public class JournalEntryController {
     }
 
     @PutMapping("/updateEntryById/{id}")
-    public JournalEntry updateJournalEntryById(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String id) {
-        return journalEntryService.updateJournalEntryById(id, journalEntry);
+    public ResponseEntity<JournalEntry> updateJournalEntryById(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String id) {
+        JournalEntry  updatedJournalEntry = journalEntryService.updateJournalEntryById(id, journalEntry);
+        return ResponseEntity.ok().header("Message", "Journal Entry Updated").body(updatedJournalEntry);
     }
     @GetMapping("/search")
     public ResponseEntity<List<JournalEntry>> searchJournalEntries(@RequestParam String keyword) {
