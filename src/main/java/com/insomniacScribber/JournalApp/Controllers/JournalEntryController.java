@@ -25,8 +25,9 @@ public class JournalEntryController {
     }
 
     @PostMapping("/createEntry")
-    public JournalEntry createJournalEntry(@Valid @RequestBody JournalEntry journalEntry) {
-        return journalEntryService.createJournalEntry(journalEntry);
+    public ResponseEntity<JournalEntry> createJournalEntry(@Valid @RequestBody JournalEntry journalEntry) {
+        JournalEntry createdJournalEntry = journalEntryService.createJournalEntry(journalEntry);
+        return ResponseEntity.status(HttpStatus.CREATED).header("Message", "New Entry Created").body(createdJournalEntry);
     }
 
     @GetMapping("/getEntryById/{id}")
