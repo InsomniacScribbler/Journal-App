@@ -18,6 +18,7 @@ public class JournalEntryController {
     private JournalEntryService journalEntryService;
 
     @GetMapping("/getAllEntries")
+    /// AGAR pata nhi hh ki kiss type ka Object return krna h then we can also write --- ResponseEntity<?></> ---
     public ResponseEntity<List<JournalEntry>> getAllJournalEntries() {
         List<JournalEntry> entries = journalEntryService.getAllJournalEntries();
 //        return new ResponseEntity<>(entries, HttpStatus.OK);
