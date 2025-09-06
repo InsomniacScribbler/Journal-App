@@ -31,8 +31,9 @@ public class JournalEntryController {
     }
 
     @GetMapping("/getEntryById/{id}")
-    public JournalEntry getJournalEntryById(@PathVariable String id) {
-        return journalEntryService.getJournalEntryById(id);
+    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable String id) {
+        JournalEntry journalEntry = journalEntryService.getJournalEntryById(id);
+        return ResponseEntity.ok().header("Message", "Journal Entry").body(journalEntry);
     }
 
     @DeleteMapping("/deleteEntryById/{id}")
