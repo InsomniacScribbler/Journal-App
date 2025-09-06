@@ -50,6 +50,6 @@ public class JournalEntryController {
     @GetMapping("/search")
     public ResponseEntity<List<JournalEntry>> searchJournalEntries(@RequestParam String keyword) {
         List<JournalEntry> entries = journalEntryService.findJournalEntriesByKeyword(keyword);
-        return ResponseEntity.ok().header("Message", "Journal Entry List with"+keyword+".").body(entries);
+        return ResponseEntity.ok().header("Message", "Journal Entry List with "+keyword+".").body(entries);
     }
 }
