@@ -2,6 +2,7 @@ package com.insomniacScribber.JournalApp.Controllers;
 
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
 import com.insomniacScribber.JournalApp.Service.JournalEntryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class JournalEntryController {
     }
 
     @PostMapping("/createEntry")
-    public JournalEntry createJournalEntry(@RequestBody JournalEntry journalEntry) {
+    public JournalEntry createJournalEntry(@Valid @RequestBody JournalEntry journalEntry) {
         return journalEntryService.createJournalEntry(journalEntry);
     }
 
@@ -37,7 +38,7 @@ public class JournalEntryController {
     }
 
     @PutMapping("/updateEntryById/{id}")
-    public JournalEntry updateJournalEntryById(@RequestBody JournalEntry journalEntry, @PathVariable String id) {
+    public JournalEntry updateJournalEntryById(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String id) {
         return journalEntryService.updateJournalEntryById(id, journalEntry);
     }
     @GetMapping("/search")
