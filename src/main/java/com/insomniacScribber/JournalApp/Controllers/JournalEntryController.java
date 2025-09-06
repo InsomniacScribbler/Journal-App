@@ -4,6 +4,7 @@ import com.insomniacScribber.JournalApp.Entity.JournalEntry;
 import com.insomniacScribber.JournalApp.Service.JournalEntryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,10 @@ public class JournalEntryController {
     private JournalEntryService journalEntryService;
 
     @GetMapping("/getAllEntries")
-    public List<JournalEntry> getAllJournalEntries() {
-        return journalEntryService.getAllJournalEntries();
+    public ResponseEntity<List<JournalEntry>> getAllJournalEntries() {
+        List<JournalEntry> entries = journalEntryService.getAllJournalEntries();
+//        return new ResponseEntity<>(entries, HttpStatus.OK);
+        return ResponseEntity.ok().header("Message", "Journal Entry List").body(entries);
     }
 
     @PostMapping("/createEntry")
