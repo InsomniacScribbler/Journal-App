@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,8 +26,8 @@ public class JournalEntry {
     private LocalDateTime date;
 
     //Your JournalEntry entity doesn't automatically set the creation date.
-    @PrePersist
-    public void prePersist() {
+    @CreatedDate
+    public void createDate() {
         if (this.date == null) {
             this.date = LocalDateTime.now();
         }

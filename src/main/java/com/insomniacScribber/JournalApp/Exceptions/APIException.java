@@ -1,7 +1,6 @@
 package com.insomniacScribber.JournalApp.Exceptions;
 
 public class APIException extends RuntimeException{
-    public static final long serialVersionUID = 1L;
 
     public APIException() {
     }
