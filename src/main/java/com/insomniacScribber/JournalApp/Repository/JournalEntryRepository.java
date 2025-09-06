@@ -10,7 +10,7 @@ import java.util.List;
 public interface JournalEntryRepository extends MongoRepository<JournalEntry, String> {
 
     // Custom query methods (if needed)
-    List<JournalEntry> findByTitleContaining(String id);
+    List<JournalEntry> findByTitleContaining(String keyword);
 
     // List<JournalEntry> findByTitle(String title);
     // List<JournalEntry> findByTitleContaining(String keyword);
