@@ -38,8 +38,8 @@ public class JournalEntryController {
 
     @DeleteMapping("/deleteEntryById/{id}")
     public ResponseEntity<String> deleteJournalEntryById(@PathVariable String id) {
-        String message = journalEntryService.deleteJournalEntryById(id);
-        return ResponseEntity.ok().body(message);
+        String msg = journalEntryService.deleteJournalEntryById(id);
+        return ResponseEntity.ok().body(msg);
     }
 
     @PutMapping("/updateEntryById/{id}")
