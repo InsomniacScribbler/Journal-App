@@ -31,4 +31,9 @@ public class UserController{
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok().header("message", "Success").body(user);
     }
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<String> deleteUser(@RequestParam String username){
+        String msg = userService.deleteUseryByUsername(username);
+        return ResponseEntity.ok().body(msg);
+    }
 }
