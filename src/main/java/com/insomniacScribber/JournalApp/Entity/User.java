@@ -1,6 +1,7 @@
 package com.insomniacScribber.JournalApp.Entity;
 
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Id;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -20,7 +21,9 @@ public class User {
     private String id;
 
     @Indexed(unique = true)
+    @Nonnull
     private String username;
+    @Nonnull
     private String password;
 
 }
