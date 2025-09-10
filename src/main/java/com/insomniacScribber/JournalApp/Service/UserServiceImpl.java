@@ -23,6 +23,22 @@ public class UserServiceImpl implements UserService {
             throw new APIException("Failed to retrieve journal entries: " + e.getMessage());
         }
     }
+    @Override
+    public User createUser(User user) {
+        if (user == null) {
+            throw new APIException("User cannot be null");
+        }
+
+        if (user.getUsername() == null || user.getUsername().isBlank()) {
+            throw new APIException("Username cannot be empty");
+        }
+
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            throw new APIException("Failed to create User: " + e.getMessage());
+        }
+    }
 
 
 }
