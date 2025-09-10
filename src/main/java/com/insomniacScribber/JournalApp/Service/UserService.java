@@ -9,7 +9,7 @@ public interface UserService {
     List<User> getUsers();
 
     User createUser(User user);
-    User getUserById(String id);  // Changed from Long to String
+    User getUserByUsername(String username);  // Changed from Long to String
 
     String deleteUseryByUsername(String id);
 }
