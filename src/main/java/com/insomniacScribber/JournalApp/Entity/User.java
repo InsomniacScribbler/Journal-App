@@ -3,7 +3,9 @@ package com.insomniacScribber.JournalApp.Entity;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,9 +23,9 @@ public class User {
     private String id;
 
     @Indexed(unique = true)
-    @Nonnull
+    @NotBlank(message = "Username cannot be Blank!!")
     private String username;
-    @Nonnull
+    @Nonnull()
     private String password;
 
 }
