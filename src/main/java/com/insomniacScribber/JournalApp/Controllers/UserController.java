@@ -26,4 +26,9 @@ public class UserController{
         User user1 = userService.createUser(user);
         return ResponseEntity.ok().header("message", "User " +user1.getUsername()+ "Created !").body(user1);
     }
+    @GetMapping("/getByUsername")
+    public ResponseEntity<User> getByUsername(@RequestParam String username){
+        User user = userService.getUserByUsername(username);
+        return ResponseEntity.ok().header("message", "Success").body(user);
+    }
 }
