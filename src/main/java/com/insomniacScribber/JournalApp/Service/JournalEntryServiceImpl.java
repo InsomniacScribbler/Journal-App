@@ -42,6 +42,9 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         if (journalEntry.getTitle() == null || journalEntry.getTitle().isBlank()) {
             throw new APIException("Title cannot be empty");
         }
+        if (username == null || username.isBlank()) {
+            throw new APIException("Username cannot be null or empty");
+        }
 
         try {
             User user = userRepository.findByUsername(username);
