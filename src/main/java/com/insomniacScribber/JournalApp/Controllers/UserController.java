@@ -22,7 +22,7 @@ public class UserController{
     }
 
     @PostMapping( "/createUser")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<?> createUser(@RequestBody User user){
         User user1 = userService.createUser(user);
         return ResponseEntity.ok().header("message", "User " +user1.getUsername()+ "Created !").body(user1);
     }
