@@ -78,18 +78,20 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     }
 
     @Override
-    public String deleteJournalEntryById(String id) {
+    public String deleteJournalEntryById(String id, String username) {
         if (id == null || id.isBlank()) {
             throw new APIException("Journal entry ID cannot be null or empty");
         }
 
         try {
+            User user = userRepository.findByUsername(username);
             Optional<JournalEntry> journalEntry = journalEntryRepository.findById(id);
             if (journalEntry.isEmpty()) {
                 throw new APIException("Entry with id " + id + " not found");
             }
             String tobeDeleted = journalEntry.get().getTitle();
             journalEntryRepository.deleteById(id);
+            user.getJournalEntryList().removeIf(x -> x.getId().equals(id));
             return "Journal entry " + tobeDeleted + " deleted";
         } catch (APIException e) {
             throw e; // Re-throw our custom exception

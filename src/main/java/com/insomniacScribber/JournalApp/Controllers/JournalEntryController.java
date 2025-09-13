@@ -52,9 +52,9 @@ public class JournalEntryController {
         return ResponseEntity.ok().header("Message", "Journal Entry").body(journalEntry);
     }
 
-    @DeleteMapping("/deleteEntryById/{id}")
-    public ResponseEntity<String> deleteJournalEntryById(@PathVariable String id) {
-        String msg = journalEntryService.deleteJournalEntryById(id);
+    @DeleteMapping("/deleteEntryById/{id}/{username}")
+    public ResponseEntity<String> deleteJournalEntryById(@PathVariable String id, @PathVariable String username) {
+        String msg = journalEntryService.deleteJournalEntryById(id,username);
         return ResponseEntity.ok().body(msg);
     }
 
