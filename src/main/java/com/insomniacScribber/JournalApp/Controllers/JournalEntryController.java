@@ -2,6 +2,7 @@ package com.insomniacScribber.JournalApp.Controllers;
 
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
 import com.insomniacScribber.JournalApp.Service.JournalEntryService;
+import com.insomniacScribber.JournalApp.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ public class JournalEntryController {
 
     @Autowired
     private JournalEntryService journalEntryService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/getAllEntries")
     /// AGAR pata nhi hh ki kiss type ka Object return krna h then we can also write --- ResponseEntity<?></> ---
