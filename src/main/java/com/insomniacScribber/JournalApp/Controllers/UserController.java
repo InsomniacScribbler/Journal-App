@@ -17,7 +17,7 @@ public class UserController{
 
     @GetMapping("/getUsers")
     public ResponseEntity<List<User>> getUsers(){
-        List<User> users = userService.getUsers();
+        List<User> users = userService.getAll();
         return ResponseEntity.ok().header("message", "Success").body(users);
     }
 
