@@ -61,4 +61,27 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User updateUser(User user, String username) {
+        if (user == null || username == null || username.isBlank()) {
+            throw new APIException("User cannot be null");
+        }
+        if (user.getUsername() == null || user.getUsername().isBlank()) {
+            throw new APIException("Updated Username cannot be empty");
+        }
+        try {
+            User toBeUpdated = getUserByUsername(username);
+            if (toBeUpdated == null) {
+                throw new APIException("Entry with username " + username + " not found");
+            }
+            toBeUpdated.setUsername(user.getUsername());
+            toBeUpdated.setPassword(user.getPassword());
+            toBeUpdated.setId(user.getId());
+
+            return userRepository.save(toBeUpdated);
+        } catch (Exception e) {
+            throw new APIException("Failed to update User: " + e.getMessage());
+        }
+    }
+
 }
