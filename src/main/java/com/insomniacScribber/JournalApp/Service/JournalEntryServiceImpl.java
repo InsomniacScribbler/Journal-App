@@ -152,23 +152,35 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         }
 
         try {
+//            User user = userRepository.findByUsername(username);
+//            if (user == null) {
+//                throw new APIException("User with username " + username + " not found");
+//            }
+//
+//            // Filter user's entries by keyword
+//            List<JournalEntry> entries = user.getJournalEntryList().stream()
+//                    .filter(entry -> {
+//                        String title = entry.getTitle() != null ? entry.getTitle().toLowerCase() : "";
+//                        String content = entry.getContent() != null ? entry.getContent().toLowerCase() : "";
+//                        String searchKeyword = keyword.toLowerCase();
+//
+//                        return title.contains(searchKeyword) || content.contains(searchKeyword);
+//                    })
+//                    .collect(Collectors.toList());
+//
+//            return entries;  This is not memory Efficient as all data of journal is loaded directly
             User user = userRepository.findByUsername(username);
             if (user == null) {
                 throw new APIException("User with username " + username + " not found");
             }
 
-            // Filter user's entries by keyword
-            List<JournalEntry> entries = user.getJournalEntryList().stream()
-                    .filter(entry -> {
-                        String title = entry.getTitle() != null ? entry.getTitle().toLowerCase() : "";
-                        String content = entry.getContent() != null ? entry.getContent().toLowerCase() : "";
-                        String searchKeyword = keyword.toLowerCase();
-
-                        return title.contains(searchKeyword) || content.contains(searchKeyword);
-                    })
-                    .collect(Collectors.toList());
+            // Search using database query (more efficient)
+            List<JournalEntry> entries = journalEntryRepository
+                    .findByUsernameAndTitleContainingIgnoreCaseOrUsernameAndContentContainingIgnoreCase(
+                            username, keyword, username, keyword);
 
             return entries;
+
 
         } catch (APIException e) {
             throw e;
