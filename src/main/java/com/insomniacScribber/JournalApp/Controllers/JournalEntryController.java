@@ -37,10 +37,12 @@ public class JournalEntryController {
 
     @PostMapping("/createEntry/{username}")
     public ResponseEntity<JournalEntry> createJournalEntryForUser(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String username ) {
-        User user = userService.getUserByUsername(username);
-        JournalEntry createdJournalEntry = journalEntryService.createJournalEntry(journalEntry);
-        String id = createdJournalEntry.getId();
-        user.getJournalEntryList().add(createdJournalEntry);
+//        User user = userService.getUserByUsername(username);
+//        JournalEntry createdJournalEntry = journalEntryService.createJournalEntry(journalEntry);
+//        String id = createdJournalEntry.getId();
+//        user.getJournalEntryList().add(createdJournalEntry);
+//        userService.updateUser(user, user.getUsername());     will write aLL THIS IN THE SERVICE CLASS
+        journalEntryService.createJournalEntry(journalEntry, username);
         return ResponseEntity.status(HttpStatus.CREATED).header("Message", "New Entry Created").body(createdJournalEntry);
     }
 

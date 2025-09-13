@@ -1,8 +1,10 @@
 package com.insomniacScribber.JournalApp.Service;
 
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
+import com.insomniacScribber.JournalApp.Entity.User;
 import com.insomniacScribber.JournalApp.Exceptions.APIException;
 import com.insomniacScribber.JournalApp.Repository.JournalEntryRepository;
+import com.insomniacScribber.JournalApp.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,12 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<JournalEntry> getAllJournalEntries() {
         try {
@@ -25,7 +33,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     }
 
     @Override
-    public JournalEntry createJournalEntry(JournalEntry journalEntry) {
+    public JournalEntry createJournalEntry(JournalEntry journalEntry, String username) {
         // Validation
         if (journalEntry == null) {
             throw new APIException("Journal entry cannot be null");
@@ -36,7 +44,12 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         }
 
         try {
-            return journalEntryRepository.save(journalEntry);
+            User user = userRepository.findByUsername(username);
+            JournalEntry savedEntry = journalEntryRepository.save(journalEntry);
+            String id = savedEntry.getId();
+            user.getJournalEntryList().add(savedEntry);
+            userService.updateUser(user, user.getUsername());
+            return savedEntry;
         } catch (Exception e) {
             throw new APIException("Failed to create journal entry: " + e.getMessage());
         }

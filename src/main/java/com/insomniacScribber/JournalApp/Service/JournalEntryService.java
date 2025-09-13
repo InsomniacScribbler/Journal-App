@@ -1,6 +1,7 @@
 package com.insomniacScribber.JournalApp.Service;
 
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
+import com.insomniacScribber.JournalApp.Entity.User;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface JournalEntryService {
 
     List<JournalEntry> getAllJournalEntries();
 
-    JournalEntry createJournalEntry(JournalEntry journalEntry);
+    JournalEntry createJournalEntry(JournalEntry journalEntry, String username);
 
     JournalEntry getJournalEntryById(String id);  // Changed from Long to String
 

@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
         }
 
         try {
-            Optional<User> users = userRepository.findByUsername(username);
-            if (users.isEmpty()) {
+            User users = userRepository.findByUsername(username);
+            if (users ==  null) {
                 throw new APIException("Entry with username " + username + " not found");
             }
-            return users.get();
+            return users;
         } catch (APIException e) {
             throw e; // Re-throw our custom exception
         } catch (Exception e) {
