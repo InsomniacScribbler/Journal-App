@@ -32,4 +32,9 @@ public class UserController{
         return ResponseEntity.ok().header("message", "Success").body(user);
     }
 
+    @PostMapping("/updateUser/{username}")
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String username){
+        User user1 = userService.updateUser(user, username);
+        return ResponseEntity.ok().header("message", "Successfully Updated User!!").body(user1);
+    }
 }
