@@ -2,7 +2,6 @@ package com.insomniacScribber.JournalApp.Controllers;
 
 import com.insomniacScribber.JournalApp.Entity.User;
 import com.insomniacScribber.JournalApp.Service.UserService;
-import com.insomniacScribber.JournalApp.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
