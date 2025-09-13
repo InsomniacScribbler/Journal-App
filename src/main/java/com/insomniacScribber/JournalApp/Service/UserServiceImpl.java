@@ -61,25 +61,4 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public String deleteUseryByUsername(String username) throws APIException {
-        if (username == null || username.isBlank()) {
-            throw new APIException("User ID cannot be null or empty");
-        }
-
-        try {
-            Optional<User> users= userRepository.findByUsername(username);
-            if (users.isEmpty()) {
-                throw new APIException("Entry with username " + username + " not found");
-            }
-            String tobeDeleted = users.get().getUsername();
-            userRepository.deleteUserByUsername(tobeDeleted);
-            return "User with username " + tobeDeleted + " deleted";
-        } catch (APIException e) {
-            throw e; // Re-throw our custom exception
-        } catch (Exception e) {
-            throw new APIException("Failed to delete journal entry: " + e.getMessage());
-        }
-    }
-
 }

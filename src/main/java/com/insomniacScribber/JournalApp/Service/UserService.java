@@ -11,5 +11,5 @@ public interface UserService {
     User createUser(User user);
     User getUserByUsername(String username);  // Changed from Long to String
 
-    String deleteUseryByUsername(String id);
+
 }
