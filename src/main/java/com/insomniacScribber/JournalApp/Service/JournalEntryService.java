@@ -15,5 +15,5 @@ public interface JournalEntryService {
     String deleteJournalEntryById(String id, String username);       // Changed from Long to String
 
     JournalEntry updateJournalEntryById(String id, JournalEntry journalEntry);  // Changed from Long to String
-    List<JournalEntry> findJournalEntriesByKeyword(String keyword);
+    List<JournalEntry> findJournalEntriesByKeyword(String keyword, String username);
 }

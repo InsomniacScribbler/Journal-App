@@ -140,14 +140,15 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         }
     }
     @Override
-    public List<JournalEntry> findJournalEntriesByKeyword(String keyword) {
+    public List<JournalEntry> findJournalEntriesByKeyword(String keyword,String username) {
         // Input validation
         if (keyword == null || keyword.isBlank()) {
             throw new APIException("Search keyword cannot be null or empty");
         }
 
         try {
-            List<JournalEntry> entries = journalEntryRepository.findByTitleContaining(keyword);
+            User user = userRepository.findByUsername(username);
+            List<JournalEntry> entries = journalEntryRepository.findById(user.getJournalEntryList());
 
             // Optional: You can add additional logic here
             if (entries.isEmpty()) {

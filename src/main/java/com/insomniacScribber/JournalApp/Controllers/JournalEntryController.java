@@ -63,9 +63,9 @@ public class JournalEntryController {
         JournalEntry  updatedJournalEntry = journalEntryService.updateJournalEntryById(id, journalEntry);
         return ResponseEntity.ok().header("Message", "Journal Entry Updated").body(updatedJournalEntry);
     }
-    @GetMapping("/search")
-    public ResponseEntity<List<JournalEntry>> searchJournalEntries(@RequestParam String keyword) {
-        List<JournalEntry> entries = journalEntryService.findJournalEntriesByKeyword(keyword);
+    @GetMapping("/search/{username}")
+    public ResponseEntity<List<JournalEntry>> searchJournalEntries(@RequestParam String keyword, @PathVariable String username) {
+        List<JournalEntry> entries = journalEntryService.findJournalEntriesByKeyword(keyword, username);
         return ResponseEntity.ok().header("Message", "Journal Entry List with "+keyword+".").body(entries);
     }
 }
