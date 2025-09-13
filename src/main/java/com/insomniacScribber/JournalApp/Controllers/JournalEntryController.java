@@ -42,7 +42,7 @@ public class JournalEntryController {
 //        String id = createdJournalEntry.getId();
 //        user.getJournalEntryList().add(createdJournalEntry);
 //        userService.updateUser(user, user.getUsername());     will write aLL THIS IN THE SERVICE CLASS
-        journalEntryService.createJournalEntry(journalEntry, username);
+        JournalEntry createdJournalEntry = journalEntryService.createJournalEntry(journalEntry, username);
         return ResponseEntity.status(HttpStatus.CREATED).header("Message", "New Entry Created").body(createdJournalEntry);
     }
 
