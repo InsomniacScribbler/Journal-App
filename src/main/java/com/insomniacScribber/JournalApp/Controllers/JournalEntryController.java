@@ -25,7 +25,7 @@ public class JournalEntryController {
 
     @GetMapping("/getAllEntries/{username}")
     /// AGAR pata nhi hh ki kiss type ka Object return krna h then we can also write --- ResponseEntity<?></> ---
-    public ResponseEntity<List<JournalEntry>> getAllJournalEntries(@PathVariable String username) {
+    public ResponseEntity<List<JournalEntry>> getAllJournalEntriesOfUser(@PathVariable String username) {
         User user = userService.getUserByUsername(username);
         List<JournalEntry> all = user.getJournalEntryList();
         if (all == null) {
@@ -35,9 +35,12 @@ public class JournalEntryController {
         return ResponseEntity.ok().header("Message", "Journal Entry List").body(all);
     }
 
-    @PostMapping("/createEntry")
-    public ResponseEntity<JournalEntry> createJournalEntry(@Valid @RequestBody JournalEntry journalEntry) {
+    @PostMapping("/createEntry/{username}")
+    public ResponseEntity<JournalEntry> createJournalEntryForUser(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String username ) {
+        User user = userService.getUserByUsername(username);
         JournalEntry createdJournalEntry = journalEntryService.createJournalEntry(journalEntry);
+        String id = createdJournalEntry.getId();
+        user.getJournalEntryList().add(createdJournalEntry);
         return ResponseEntity.status(HttpStatus.CREATED).header("Message", "New Entry Created").body(createdJournalEntry);
     }
 
