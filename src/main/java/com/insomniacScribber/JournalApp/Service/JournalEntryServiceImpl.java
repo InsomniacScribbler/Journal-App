@@ -175,9 +175,9 @@ public class JournalEntryServiceImpl implements JournalEntryService {
             }
 
             // Search using database query (more efficient)
-            List<JournalEntry> entries = journalEntryRepository
-                    .findByUsernameAndTitleContainingIgnoreCaseOrUsernameAndContentContainingIgnoreCase(
-                            username, keyword, username, keyword);
+            List<JournalEntry> entries = journalEntryRepository.findByUsernameAndTitleContainingIgnoreCaseOrContentContainingIgnoreCase(
+                    username, keyword, keyword);
+
 
             return entries;
 
