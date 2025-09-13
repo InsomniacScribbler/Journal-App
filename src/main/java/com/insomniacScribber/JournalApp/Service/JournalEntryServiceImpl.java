@@ -82,6 +82,9 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         if (id == null || id.isBlank()) {
             throw new APIException("Journal entry ID cannot be null or empty");
         }
+        if (username == null || username.isBlank()) {
+            throw new APIException("Username cannot be null or empty");
+        }
 
         try {
             User user = userRepository.findByUsername(username);
@@ -89,9 +92,13 @@ public class JournalEntryServiceImpl implements JournalEntryService {
             if (journalEntry.isEmpty()) {
                 throw new APIException("Entry with id " + id + " not found");
             }
+            if (user == null) {
+                throw new APIException("User with username " + username + " not found");
+            }
             String tobeDeleted = journalEntry.get().getTitle();
             journalEntryRepository.deleteById(id);
             user.getJournalEntryList().removeIf(x -> x.getId().equals(id));
+            userService.updateUser(user, user.getUsername());
             return "Journal entry " + tobeDeleted + " deleted";
         } catch (APIException e) {
             throw e; // Re-throw our custom exception
