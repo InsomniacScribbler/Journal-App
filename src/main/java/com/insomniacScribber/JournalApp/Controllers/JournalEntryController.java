@@ -1,6 +1,7 @@
 package com.insomniacScribber.JournalApp.Controllers;
 
 import com.insomniacScribber.JournalApp.Entity.JournalEntry;
+import com.insomniacScribber.JournalApp.Entity.User;
 import com.insomniacScribber.JournalApp.Service.JournalEntryService;
 import com.insomniacScribber.JournalApp.Service.UserService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,12 +23,16 @@ public class JournalEntryController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getAllEntries")
+    @GetMapping("/getAllEntries/{username}")
     /// AGAR pata nhi hh ki kiss type ka Object return krna h then we can also write --- ResponseEntity<?></> ---
-    public ResponseEntity<List<JournalEntry>> getAllJournalEntries() {
-        List<JournalEntry> entries = journalEntryService.getAllJournalEntries();
+    public ResponseEntity<List<JournalEntry>> getAllJournalEntries(@PathVariable String username) {
+        User user = userService.getUserByUsername(username);
+        List<JournalEntry> all = user.getJournalEntryList();
+        if (all == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 //        return new ResponseEntity<>(entries, HttpStatus.OK);
-        return ResponseEntity.ok().header("Message", "Journal Entry List").body(entries);
+        return ResponseEntity.ok().header("Message", "Journal Entry List").body(all);
     }
 
     @PostMapping("/createEntry")
