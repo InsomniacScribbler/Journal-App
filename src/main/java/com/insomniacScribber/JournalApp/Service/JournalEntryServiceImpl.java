@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JournalEntryServiceImpl implements JournalEntryService {
@@ -142,20 +143,30 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     @Override
     public List<JournalEntry> findJournalEntriesByKeyword(String keyword,String username) {
         // Input validation
+        // Input validation
         if (keyword == null || keyword.isBlank()) {
             throw new APIException("Search keyword cannot be null or empty");
+        }
+        if (username == null || username.isBlank()) {
+            throw new APIException("Username cannot be null or empty");
         }
 
         try {
             User user = userRepository.findByUsername(username);
-            List<JournalEntry> entries = journalEntryRepository.findById(user.getJournalEntryList());
-
-            // Optional: You can add additional logic here
-            if (entries.isEmpty()) {
-                // You can either return empty list or throw exception
-                // For search operations, empty list is usually preferred
-                return entries;
+            if (user == null) {
+                throw new APIException("User with username " + username + " not found");
             }
+
+            // Filter user's entries by keyword
+            List<JournalEntry> entries = user.getJournalEntryList().stream()
+                    .filter(entry -> {
+                        String title = entry.getTitle() != null ? entry.getTitle().toLowerCase() : "";
+                        String content = entry.getContent() != null ? entry.getContent().toLowerCase() : "";
+                        String searchKeyword = keyword.toLowerCase();
+
+                        return title.contains(searchKeyword) || content.contains(searchKeyword);
+                    })
+                    .collect(Collectors.toList());
 
             return entries;
 
@@ -164,6 +175,6 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         } catch (Exception e) {
             throw new APIException("Failed to search journal entries: " + e.getMessage());
         }
-    }
+}
 }
 
