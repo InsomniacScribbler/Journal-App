@@ -46,6 +46,7 @@ public class JournalEntryController {
         return ResponseEntity.status(HttpStatus.CREATED).header("Message", "New Entry Created").body(createdJournalEntry);
     }
 
+
     @GetMapping("/getEntryById/{id}")
     public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable String id) {
         JournalEntry journalEntry = journalEntryService.getJournalEntryById(id);
@@ -58,9 +59,9 @@ public class JournalEntryController {
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping("/updateEntryById/{id}")
-    public ResponseEntity<JournalEntry> updateJournalEntryById(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String id) {
-        JournalEntry  updatedJournalEntry = journalEntryService.updateJournalEntryById(id, journalEntry);
+    @PutMapping("/updateEntryById/{id}/{username}")
+    public ResponseEntity<JournalEntry> updateJournalEntryById(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String id, @PathVariable String username) {
+        JournalEntry  updatedJournalEntry = journalEntryService.updateJournalEntryById(id, journalEntry, username);
         return ResponseEntity.ok().header("Message", "Journal Entry Updated").body(updatedJournalEntry);
     }
     @GetMapping("/search/{username}")
