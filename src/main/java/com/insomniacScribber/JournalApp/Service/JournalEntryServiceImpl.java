@@ -109,37 +109,71 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     }
 
     @Override
-    public JournalEntry updateJournalEntryById(String id, JournalEntry journalEntry) {
+
+    public JournalEntry updateJournalEntryById(String id, JournalEntry journalEntry, String username) {
+        // Input validation (same as yours)
         if (id == null || id.isBlank()) {
             throw new APIException("Journal entry ID cannot be null or empty");
         }
-
         if (journalEntry == null) {
             throw new APIException("Journal entry cannot be null");
         }
-
         if (journalEntry.getTitle() == null || journalEntry.getTitle().isBlank()) {
             throw new APIException("Title cannot be empty");
         }
-
         if (journalEntry.getContent() == null || journalEntry.getContent().isBlank()) {
             throw new APIException("Content cannot be empty");
         }
+        if (username == null || username.isBlank()) {
+            throw new APIException("Username cannot be null or empty");
+        }
 
         try {
-            Optional<JournalEntry> existingEntry = journalEntryRepository.findById(id);
-            if (existingEntry.isEmpty()) {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                throw new APIException("User with username " + username + " not found");
+            }
+
+            Optional<JournalEntry> existingEntryOpt = journalEntryRepository.findById(id);
+            if (existingEntryOpt.isEmpty()) {
                 throw new APIException("Entry with id " + id + " not found");
             }
 
-            journalEntry.setId(id);
-            return journalEntryRepository.save(journalEntry);
+            JournalEntry existingEntry = existingEntryOpt.get();
+            boolean isOwner = user.getJournalEntryList().stream()
+                    .anyMatch(userEntry -> userEntry.getId().equals(id));
+
+            if (!isOwner) {
+                throw new APIException("You don't have permission to update this entry");
+            }
+
+            // ✅ FIX: Actually update the fields!
+            existingEntry.setTitle(journalEntry.getTitle());
+            existingEntry.setContent(journalEntry.getContent());
+            // lastModified will be auto-updated by @LastModifiedDate
+
+            JournalEntry updatedEntry = journalEntryRepository.save(existingEntry);
+
+            // Update the entry in user's list as well
+            user.getJournalEntryList().stream()
+                    .filter(entry -> entry.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(entry -> {
+                        entry.setTitle(updatedEntry.getTitle());
+                        entry.setContent(updatedEntry.getContent());
+                        entry.setLastModified(updatedEntry.getLastModified()); // ✅ FIX: Use lastModified, not updatedDate
+                    });
+
+            userRepository.save(user);
+            return updatedEntry;
+
         } catch (APIException e) {
-            throw e; // Re-throw our custom exception
+            throw e;
         } catch (Exception e) {
             throw new APIException("Failed to update journal entry: " + e.getMessage());
         }
     }
+
     @Override
     public List<JournalEntry> findJournalEntriesByKeyword(String keyword,String username) {
         // Input validation
