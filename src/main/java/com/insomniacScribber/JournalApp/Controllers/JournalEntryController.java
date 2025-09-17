@@ -55,13 +55,13 @@ public class JournalEntryController {
 
     @DeleteMapping("/deleteEntryById/{id}/{username}")
     public ResponseEntity<String> deleteJournalEntryById(@PathVariable String id, @PathVariable String username) {
-        String msg = journalEntryService.deleteJournalEntryById(id,username);
+        String msg = journalEntryService.deleteJournalEntry(id,username);
         return ResponseEntity.ok().body(msg);
     }
 
     @PutMapping("/updateEntryById/{id}/{username}")
     public ResponseEntity<JournalEntry> updateJournalEntryById(@Valid @RequestBody JournalEntry journalEntry, @PathVariable String id, @PathVariable String username) {
-        JournalEntry  updatedJournalEntry = journalEntryService.updateJournalEntryById(id, journalEntry, username);
+        JournalEntry  updatedJournalEntry = journalEntryService.updateJournalEntry(id, journalEntry, username);
         return ResponseEntity.ok().header("Message", "Journal Entry Updated").body(updatedJournalEntry);
     }
     @GetMapping("/search/{username}")
