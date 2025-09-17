@@ -79,7 +79,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
     }
 
     @Override
-    public String deleteJournalEntryById(String id, String username) {
+    public String deleteJournalEntry(String id, String username) {
         if (id == null || id.isBlank()) {
             throw new APIException("Journal entry ID cannot be null or empty");
         }
@@ -110,7 +110,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
 
     @Override
 
-    public JournalEntry updateJournalEntryById(String id, JournalEntry journalEntry, String username) {
+    public JournalEntry updateJournalEntry(String id, JournalEntry journalEntry, String username) {
         // Input validation (same as yours)
         if (id == null || id.isBlank()) {
             throw new APIException("Journal entry ID cannot be null or empty");
