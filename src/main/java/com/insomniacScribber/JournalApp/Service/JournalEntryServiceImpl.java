@@ -111,8 +111,8 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         }
     }
 
+    @Transactional
     @Override
-
     public JournalEntry updateJournalEntry(String id, JournalEntry journalEntry, String username) {
         // Input validation (same as yours)
         if (id == null || id.isBlank()) {
