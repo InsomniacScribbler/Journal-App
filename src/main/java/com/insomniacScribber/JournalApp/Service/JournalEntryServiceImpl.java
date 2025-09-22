@@ -80,6 +80,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
         }
     }
 
+    @Transactional
     @Override
     public String deleteJournalEntry(String id, String username) {
         if (id == null || id.isBlank()) {
